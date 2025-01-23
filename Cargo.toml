@@ -1,0 +1,24 @@
+[package]
+name = "camera-delay-sim"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[lib]
+name = "camera_delay_sim_wasm"
+crate-type = ["cdylib"]
+
+[dependencies]
+tracing = "0.1.40"
+three-d = { version = "0.16.4", features = ["egui-gui"] }
+
+[target.'cfg(not(target_arch = "wasm32"))'.dependencies]
+tracing-subscriber = "0.3.18"
+
+[target.'cfg(target_arch = "wasm32")'.dependencies]
+wasm-bindgen = "0.2"
+wasm-bindgen-futures = "0.4"
+console_error_panic_hook = "0.1"
+tracing-wasm = "0.2.1"
+tracing-log = "0.2.0"
