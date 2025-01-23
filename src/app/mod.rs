@@ -8,7 +8,7 @@ mod visualizations;
 pub fn run() {
     let window = Window::new(WindowSettings {
         title: "Camera Delay Simulator".to_string(),
-        // max_size: Some((1280, 720)),
+        max_size: Some((1280, 720)),
         ..Default::default()
     })
     .unwrap();
@@ -21,17 +21,12 @@ pub fn run() {
         &context,
         (0.5, 0.25),
         (0.98, 0.49),
-        visualizations::SimMaterial::ball(&context),
+        visualizations::SimMaterial::ball(),
     );
     window.render_loop(move |mut frame_input| {
         let viewport = gui.update(&mut frame_input, &mut settings);
 
         ball_sim_widget.update(viewport, frame_input.accumulated_time as f32 * 1000.0);
-        // led_strip_widget.update(
-        //     viewport,
-        //     &rgb_colors,
-        //     frame_input.accumulated_time as f32 * 1000.0,
-        // );
 
         frame_input
             .screen()

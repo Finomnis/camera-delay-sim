@@ -1,7 +1,6 @@
 use three_d::*;
 
 pub struct SimMaterial {
-    context: Context,
     fragment_shader: &'static str,
     widget_size: Vec2,
     time: f32,
@@ -9,9 +8,8 @@ pub struct SimMaterial {
 }
 
 impl SimMaterial {
-    fn new(context: &Context, fragment_shader: &'static str, material_id: u16) -> Self {
+    fn new(fragment_shader: &'static str, material_id: u16) -> Self {
         Self {
-            context: context.clone(),
             fragment_shader,
             widget_size: Vec2::new(1.0, 1.0),
             time: 0.0,
@@ -19,8 +17,8 @@ impl SimMaterial {
         }
     }
 
-    pub fn ball(context: &Context) -> Self {
-        Self::new(context, include_str!("shaders/sim_ball.frag"), 0b100u16)
+    pub fn ball() -> Self {
+        Self::new(include_str!("shaders/sim_ball.frag"), 0b100u16)
     }
 
     pub fn set_size(&mut self, width: f32, height: f32) {
