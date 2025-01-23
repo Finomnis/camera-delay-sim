@@ -1,26 +1,22 @@
 use three_d::egui::*;
 
+#[derive(Copy, Clone)]
 pub struct SimulatorSettings {
-    pub resolution: usize,
-    pub bpm: u16,
+    pub ball_size: f32,
 }
 
 impl SimulatorSettings {
     pub fn render_gui(&mut self, ui: &mut Ui) {
         ui.add(
-            Slider::new(&mut self.resolution, 32..=1024)
-                .text("Resolution")
+            Slider::new(&mut self.ball_size, 0.2..=1.0)
+                .text("Ball Size")
                 .logarithmic(true),
         );
-        ui.add(Slider::new(&mut self.bpm, 70..=160).text("BPM"));
     }
 }
 
 impl Default for SimulatorSettings {
     fn default() -> Self {
-        Self {
-            resolution: 1024,
-            bpm: 125,
-        }
+        Self { ball_size: 1.0 }
     }
 }

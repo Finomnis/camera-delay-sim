@@ -1,24 +1,28 @@
 use three_d::*;
 
+use crate::app::settings::SimulatorSettings;
+
 pub struct SimMaterial {
     fragment_shader: &'static str,
     widget_size: Vec2,
     time: f32,
     material_id: u16,
+    settings: SimulatorSettings,
 }
 
 impl SimMaterial {
-    fn new(fragment_shader: &'static str, material_id: u16) -> Self {
+    fn new(fragment_shader: &'static str, material_id: u16, settings: SimulatorSettings) -> Self {
         Self {
             fragment_shader,
             widget_size: Vec2::new(1.0, 1.0),
             time: 0.0,
             material_id,
+            settings,
         }
     }
 
-    pub fn ball() -> Self {
-        Self::new(include_str!("shaders/sim_ball.frag"), 0b100u16)
+    pub fn ball(settings: SimulatorSettings) -> Self {
+        Self::new(include_str!("shaders/sim_ball.frag"), 0b100u16, settings)
     }
 
     pub fn set_size(&mut self, width: f32, height: f32) {
@@ -28,6 +32,10 @@ impl SimMaterial {
 
     pub fn set_time(&mut self, time: f32) {
         self.time = time;
+    }
+
+    pub fn apply_settings(&mut self, settings: SimulatorSettings) {
+        self.settings = settings;
     }
 }
 
@@ -50,6 +58,7 @@ impl Material for SimMaterial {
     fn use_uniforms(&self, program: &Program, _camera: &Camera, _lights: &[&dyn Light]) {
         program.use_uniform_if_required("widget_size", &self.widget_size);
         program.use_uniform_if_required("time", &self.time);
+        program.use_uniform_if_required("ball_size", &self.settings.ball_size);
     }
 
     fn render_states(&self) -> RenderStates {

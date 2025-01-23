@@ -3,6 +3,8 @@ use three_d::*;
 mod sim_material;
 pub use sim_material::SimMaterial;
 
+use super::settings::SimulatorSettings;
+
 pub struct SimWidget {
     /// Position of the widget's center point
     ///  - (0.5,0.5) would mean that the widget is in the center of the screen
@@ -31,7 +33,7 @@ impl SimWidget {
         }
     }
 
-    pub fn update(&mut self, viewport: Viewport, time: f32) {
+    pub fn update(&mut self, viewport: Viewport, time: f32, settings: SimulatorSettings) {
         let width = viewport.width as f32 * self.rel_size.x;
         let height = viewport.height as f32 * self.rel_size.y;
         let x = viewport.width as f32 * self.rel_position.x;
@@ -39,6 +41,7 @@ impl SimWidget {
         self.gm.geometry.set_center((x, y));
         self.gm.geometry.set_size(width, height);
         self.gm.material.set_size(width, height);
+        self.gm.material.apply_settings(settings);
 
         // Update time
         self.gm.material.set_time(time);
