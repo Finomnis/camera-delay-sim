@@ -26,7 +26,6 @@ impl SimulatorGUI {
             |gui_context| {
                 use three_d::egui::*;
                 SidePanel::left("side_panel").show(gui_context, |ui| {
-                    ui.heading("Simulator Settings");
                     settings.render_gui(ui);
                 });
                 panel_width = gui_context.used_rect().width();

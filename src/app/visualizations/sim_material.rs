@@ -59,6 +59,7 @@ impl Material for SimMaterial {
         program.use_uniform_if_required("widget_size", &self.widget_size);
         program.use_uniform_if_required("time", &self.time);
         program.use_uniform_if_required("ball_size", &self.settings.ball_size);
+        program.use_uniform_if_required("camera_brightness", &self.settings.camera_brightness);
     }
 
     fn render_states(&self) -> RenderStates {

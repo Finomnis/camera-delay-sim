@@ -1,7 +1,12 @@
 uniform float ball_size;
+uniform float camera_brightness;
+
+float simulate_sensor_image(vec2 pos) {
+    return 0.0;
+}
 
 float simulate_camera(vec2 pos){
-    return 0.0;
+    return 1.0;
 }
 
 void main()
@@ -19,7 +24,7 @@ void main()
         ball_value = 1.0;
     }
 
-    vec3 camera_color = linear_to_srgb(vec3(camera_value, 0, 0)) * 0.5;
+    vec3 camera_color = linear_to_srgb(vec3(camera_value, 0, 0)) * 0.5 * camera_brightness;
     vec3 ball_color = vec3(ball_value, ball_value, ball_value) * 0.5;
 
     // Add alpha and do gamma correction
