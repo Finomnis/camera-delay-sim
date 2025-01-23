@@ -31,7 +31,7 @@ impl SimWidget {
         }
     }
 
-    pub fn update(&mut self, viewport: Viewport, data: &[[f32; 3]], time: f32) {
+    pub fn update(&mut self, viewport: Viewport, time: f32) {
         let width = viewport.width as f32 * self.rel_size.x;
         let height = viewport.height as f32 * self.rel_size.y;
         let x = viewport.width as f32 * self.rel_position.x;
@@ -39,9 +39,6 @@ impl SimWidget {
         self.gm.geometry.set_center((x, y));
         self.gm.geometry.set_size(width, height);
         self.gm.material.set_size(width, height);
-
-        // Update data
-        self.gm.material.update_data(data);
 
         // Update time
         self.gm.material.set_time(time);

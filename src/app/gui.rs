@@ -1,10 +1,10 @@
 use super::settings::SimulatorSettings;
 
-pub struct EffectGUI {
+pub struct SimulatorGUI {
     gui: three_d::GUI,
 }
 
-impl EffectGUI {
+impl SimulatorGUI {
     pub fn new(context: &three_d::Context) -> Self {
         Self {
             gui: three_d::GUI::new(&context),
