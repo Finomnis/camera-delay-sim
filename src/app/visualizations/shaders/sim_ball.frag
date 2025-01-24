@@ -70,7 +70,7 @@ float integrate_sensor_curve(float p0, float p1, float p2, float p3, float pos, 
 
 
 float simulate_camera(vec2 pixel_pos){
-    float ball_squared = (1 + pixel_pos.y) * (1 - pixel_pos.y);
+    float ball_squared = 1 - pixel_pos.y * pixel_pos.y;
     if (ball_squared <= 0) {
         // Our y position has no ball
         return 0.0;
