@@ -19,8 +19,8 @@ pub fn run() {
 
     let mut ball_sim_widget = visualizations::SimWidget::new(
         &context,
-        (0.5, 0.25),
-        (0.98, 0.49),
+        (0.5, 0.15),
+        (0.98, 0.29),
         visualizations::SimMaterial::ball(settings),
     );
     window.render_loop(move |mut frame_input| {

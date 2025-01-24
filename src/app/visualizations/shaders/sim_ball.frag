@@ -1,6 +1,4 @@
-uniform float ball_size;
 uniform float ball_speed;
-uniform float camera_brightness;
 uniform float camera_framerate;
 uniform float camera_pipeline_delay;
 uniform float camera_sensor_integration;
@@ -100,6 +98,10 @@ float simulate_camera(vec2 pixel_pos){
     float sensor_curve_p1 = sensor_curve_p0 + sensor_curve_rise_time;
     float sensor_curve_p3 = ball_end + integration_offset_sensor + integration_distance_sensor;
     float sensor_curve_p2 = sensor_curve_p3 - sensor_curve_rise_time;
+    float sensor_curve_plateau_brightness = 1.0;
+    if (ball_size < integration_distance_sensor) {
+        sensor_curve_plateau_brightness = ball_size / integration_distance_sensor;
+    }
 
     float display_hold_distance = compute_integration_distance_display(
         camera_framerate,
@@ -107,14 +109,16 @@ float simulate_camera(vec2 pixel_pos){
         camera_display_strobing
     );
 
-    return integrate_sensor_curve(sensor_curve_p0, sensor_curve_p1, sensor_curve_p2, sensor_curve_p3, pos - display_hold_distance, display_hold_distance);
+    float display_value = integrate_sensor_curve(sensor_curve_p0, sensor_curve_p1, sensor_curve_p2, sensor_curve_p3, pos - display_hold_distance, display_hold_distance);
+
+    return display_value * sensor_curve_plateau_brightness;
 }
 
 void main()
 {
     vec2 pixel_pos = widget_size * uvs;
 
-    float ball_diameter_pixels = widget_size.y/4 * ball_size;
+    float ball_diameter_pixels = widget_size.y/3;
 
     vec2 rel_pos = (vec2(ball_diameter_pixels * 2., widget_size.y/2.) - pixel_pos) / ball_diameter_pixels;
     float rel_dist = length(rel_pos);
@@ -125,7 +129,7 @@ void main()
         ball_value = 1.0;
     }
 
-    vec3 camera_color = linear_to_srgb(vec3(camera_value, 0, 0)) * 0.5 * camera_brightness;
+    vec3 camera_color = linear_to_srgb(vec3(camera_value, 0, 0)) * 0.5;
     vec3 ball_color = vec3(ball_value, ball_value, ball_value) * 0.5;
 
     // Add alpha and do gamma correction

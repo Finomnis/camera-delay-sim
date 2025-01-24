@@ -58,9 +58,7 @@ impl Material for SimMaterial {
     fn use_uniforms(&self, program: &Program, _camera: &Camera, _lights: &[&dyn Light]) {
         program.use_uniform_if_required("widget_size", &self.widget_size);
         program.use_uniform_if_required("time", &self.time);
-        program.use_uniform_if_required("ball_size", &self.settings.ball_size);
         program.use_uniform_if_required("ball_speed", &self.settings.ball_speed);
-        program.use_uniform_if_required("camera_brightness", &self.settings.camera_brightness);
         program.use_uniform_if_required(
             "camera_framerate",
             &f32::from(self.settings.camera_framerate),
