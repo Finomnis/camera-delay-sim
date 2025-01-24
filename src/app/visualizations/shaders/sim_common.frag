@@ -29,5 +29,10 @@ float compute_integration_distance_sensor(float fps, float ball_speed, float sen
 
 // Result given in ball diameters
 float compute_integration_offset_sensor(float fps, float ball_speed, float pipeline_delay){
-    return ball_speed/fps + pipeline_delay * ball_speed;
+    return pipeline_delay * ball_speed;
+}
+
+// Result given in ball diameters
+float compute_integration_distance_display(float fps, float ball_speed, float display_strobing){
+    return display_strobing * ball_speed/fps;
 }

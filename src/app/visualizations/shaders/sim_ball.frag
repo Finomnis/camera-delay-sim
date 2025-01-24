@@ -6,6 +6,71 @@ uniform float camera_pipeline_delay;
 uniform float camera_sensor_integration;
 uniform float camera_display_strobing;
 
+
+float sample_sensor_curve(float p0, float p1, float p2, float p3, float pos){
+    if (pos < p0) {
+        return 0.0;
+    }
+    if (pos < p1) {
+        return (pos - p0) / (p1 - p0);
+    }
+    if (pos < p2) {
+        return 1.0;
+    }
+    if (pos < p3) {
+        return (pos - p3) / (p2 - p3);
+    }
+    return 0.0;
+}
+
+float compute_partial_triangle_area(float p0, float p1, float x){
+    float bottom_side = x - p0;
+    float right_side = (x-p0) / (p1-p0);
+    float area = bottom_side * right_side * 0.5;
+    return area;
+}
+
+float integrate_sensor_curve(float p0, float p1, float p2, float p3, float pos, float len){
+    if(0 >= len){
+        return sample_sensor_curve(p0, p1, p2, p3, pos);
+    }
+
+    float start = pos;
+    float end = pos + len;
+
+    float overlap_rising_start = max(p0, start);
+    float overlap_rising_end = min(p1, end);
+    float overlap_plateau_start = max(p1, start);
+    float overlap_plateau_end = min(p2, end);
+    float overlap_falling_start = max(p2, start);
+    float overlap_falling_end = min(p3, end);
+
+    float value_total;
+
+    if(overlap_rising_end > overlap_rising_start){
+        value_total += (
+            compute_partial_triangle_area(p0, p1, overlap_rising_end)
+            - compute_partial_triangle_area(p0, p1, overlap_rising_start)
+        );
+    }
+
+    if(overlap_plateau_end > overlap_plateau_start){
+        value_total += overlap_plateau_end - overlap_plateau_start;
+    }
+
+
+    if(overlap_falling_end > overlap_falling_start){
+        value_total += (
+            compute_partial_triangle_area(p3, p2, overlap_falling_end)
+            - compute_partial_triangle_area(p3, p2, overlap_falling_start)
+        );
+    }
+
+    return value_total / len;
+}
+
+
+
 float simulate_camera(vec2 pixel_pos){
     float ball_squared = (1 + pixel_pos.y) * (1 - pixel_pos.y);
     if (ball_squared <= 0) {
@@ -30,26 +95,19 @@ float simulate_camera(vec2 pixel_pos){
         camera_pipeline_delay
     );
 
-    float camera_curve_rise_time = min(ball_size, integration_distance_sensor);
-    float camera_curve_p0 = ball_start + integration_offset_sensor;
-    float camera_curve_p1 = camera_curve_p0 + camera_curve_rise_time;
-    float camera_curve_p3 = ball_end + integration_offset_sensor + integration_distance_sensor;
-    float camera_curve_p2 = camera_curve_p3 - camera_curve_rise_time;
+    float sensor_curve_rise_time = min(ball_size, integration_distance_sensor);
+    float sensor_curve_p0 = ball_start + integration_offset_sensor;
+    float sensor_curve_p1 = sensor_curve_p0 + sensor_curve_rise_time;
+    float sensor_curve_p3 = ball_end + integration_offset_sensor + integration_distance_sensor;
+    float sensor_curve_p2 = sensor_curve_p3 - sensor_curve_rise_time;
 
-    if (pos < camera_curve_p0) {
-        return 0.0;
-    }
-    if (pos < camera_curve_p1) {
-        return 0.25;
-    }
-    if (pos < camera_curve_p2) {
-        return 0.5;
-    }
-    if (pos < camera_curve_p3) {
-        return 0.75;
-    }
+    float display_hold_distance = compute_integration_distance_display(
+        camera_framerate,
+        2.0 * ball_speed,
+        camera_display_strobing
+    );
 
-    return 1.0;
+    return integrate_sensor_curve(sensor_curve_p0, sensor_curve_p1, sensor_curve_p2, sensor_curve_p3, pos - display_hold_distance, display_hold_distance);
 }
 
 void main()
