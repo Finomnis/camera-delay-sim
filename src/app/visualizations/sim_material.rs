@@ -59,7 +59,24 @@ impl Material for SimMaterial {
         program.use_uniform_if_required("widget_size", &self.widget_size);
         program.use_uniform_if_required("time", &self.time);
         program.use_uniform_if_required("ball_size", &self.settings.ball_size);
+        program.use_uniform_if_required("ball_speed", &self.settings.ball_speed);
         program.use_uniform_if_required("camera_brightness", &self.settings.camera_brightness);
+        program.use_uniform_if_required(
+            "camera_framerate",
+            &f32::from(self.settings.camera_framerate),
+        );
+        program.use_uniform_if_required(
+            "camera_pipeline_delay",
+            &(f32::from(self.settings.camera_pipeline_delay_ms) / 1000.0),
+        );
+        program.use_uniform_if_required(
+            "camera_sensor_integration",
+            &(f32::from(self.settings.camera_sensor_integration) / 100.0),
+        );
+        program.use_uniform_if_required(
+            "camera_display_strobing",
+            &(f32::from(self.settings.camera_display_strobing) / 100.0),
+        );
     }
 
     fn render_states(&self) -> RenderStates {

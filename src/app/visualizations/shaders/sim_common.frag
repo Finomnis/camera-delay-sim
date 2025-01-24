@@ -21,3 +21,13 @@ vec3 linear_to_srgb(vec3 col) {
         srgb_inverse_transfer(col.b)
     );
 }
+
+// Result given in ball diameters
+float compute_integration_distance_sensor(float fps, float ball_speed, float sensor_integration){
+    return sensor_integration * ball_speed/fps;
+}
+
+// Result given in ball diameters
+float compute_integration_offset_sensor(float fps, float ball_speed, float pipeline_delay){
+    return ball_speed/fps + pipeline_delay * ball_speed;
+}

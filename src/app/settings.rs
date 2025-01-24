@@ -20,7 +20,7 @@ impl SimulatorSettings {
                 .text("Size")
                 .logarithmic(true),
         );
-        ui.add(Slider::new(&mut self.ball_speed, 0.0..=5.0).text("Speed (ball diameters / s)"));
+        ui.add(Slider::new(&mut self.ball_speed, 0.0..=300.0).text("Speed (ball diameters / s)"));
 
         ui.add_space(12.0);
 
@@ -54,7 +54,7 @@ impl Default for SimulatorSettings {
     fn default() -> Self {
         Self {
             ball_size: 1.0,
-            ball_speed: 2.0,
+            ball_speed: 50.0,
             camera_framerate: 60,
             camera_pipeline_delay_ms: 0,
             camera_sensor_integration: 100,
