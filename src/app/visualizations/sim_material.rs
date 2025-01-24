@@ -24,6 +24,9 @@ impl SimMaterial {
     pub fn ball(settings: SimulatorSettings) -> Self {
         Self::new(include_str!("shaders/sim_ball.frag"), 0b100u16, settings)
     }
+    pub fn graph(settings: SimulatorSettings) -> Self {
+        Self::new(include_str!("shaders/sim_graph.frag"), 0b101u16, settings)
+    }
 
     pub fn set_size(&mut self, width: f32, height: f32) {
         self.widget_size.x = width;

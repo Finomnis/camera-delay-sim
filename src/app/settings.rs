@@ -7,6 +7,7 @@ pub struct SimulatorSettings {
     pub camera_pipeline_delay_ms: u8,
     pub camera_sensor_integration: u8,
     pub camera_display_strobing: u8,
+    pub graph_horizontal_range_ms: u16,
 }
 
 impl SimulatorSettings {
@@ -31,6 +32,16 @@ impl SimulatorSettings {
                 .text("Display Strobing (% frame)"),
         );
 
+        ui.add_space(12.0);
+
+        ui.heading("Graph Settings");
+
+        ui.add(
+            Slider::new(&mut self.graph_horizontal_range_ms, 10..=1000)
+                .text("Horizontal Range (ms)")
+                .logarithmic(true),
+        );
+
         ui.add_space(24.0);
         if ui.button("Reset").clicked() {
             *self = Self::default();
@@ -46,6 +57,7 @@ impl Default for SimulatorSettings {
             camera_pipeline_delay_ms: 35,
             camera_sensor_integration: 100,
             camera_display_strobing: 100,
+            graph_horizontal_range_ms: 150,
         }
     }
 }
