@@ -37,7 +37,7 @@ impl SimulatorSettings {
         ui.heading("Graph Settings");
 
         ui.add(
-            Slider::new(&mut self.graph_horizontal_range_ms, 10..=1000)
+            Slider::new(&mut self.graph_horizontal_range_ms, 10..=1500)
                 .text("Horizontal Range (ms)")
                 .logarithmic(true),
         );
@@ -57,7 +57,7 @@ impl Default for SimulatorSettings {
             camera_pipeline_delay_ms: 35,
             camera_sensor_integration: 100,
             camera_display_strobing: 100,
-            graph_horizontal_range_ms: 500,
+            graph_horizontal_range_ms: 250,
         }
     }
 }

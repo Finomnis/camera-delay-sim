@@ -32,7 +32,7 @@ void main()
 
     float time_s = uvs.x * graph_horizontal_range_s;
     float pos = uvs.y;
-    float ball_size = 0.02;
+    float ball_size = 0.05;
     float ball_pos = 2.0 * ball_speed * ball_size * time_s;
 
     float ball_value = 0.0;
