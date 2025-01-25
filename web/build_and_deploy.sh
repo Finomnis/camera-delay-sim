@@ -8,10 +8,10 @@ cd "$SCRIPTPATH"
 ./build.sh
 
 rm -rf hosting_repo
-git clone git@github.com:Finomnis/effects-1d-demo.git hosting_repo -b gh-pages
+git clone git@github.com:Finomnis/camera-delay-sim.git hosting_repo -b gh-pages
 (
     cd hosting_repo
-    rm *
+    rm -rf *
     cp ../dist/* .
     git add .
     git commit -m 'Update content'

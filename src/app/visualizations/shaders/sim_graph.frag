@@ -51,7 +51,7 @@ void main()
         camera_value = 0.0;
     }
 
-    vec3 camera_color = linear_to_srgb(vec3(camera_value, 0, 0)) * 0.5;
+    vec3 camera_color = linear_to_srgb(vec3(camera_value, 0.0, 0.0)) * 0.5;
     vec3 ball_color = vec3(ball_value, ball_value, ball_value) * 0.5;
 
     // Add alpha and do gamma correction

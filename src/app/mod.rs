@@ -8,7 +8,7 @@ mod visualizations;
 pub fn run() {
     let window = Window::new(WindowSettings {
         title: "Camera Delay Simulator".to_string(),
-        max_size: Some((1440, 720)),
+        //max_size: Some((1440, 720)),
         ..Default::default()
     })
     .unwrap();

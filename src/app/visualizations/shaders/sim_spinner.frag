@@ -31,7 +31,7 @@ void main()
 
     vec2 pixel_pos = 2.0 * uvs - vec2(1.0, 1.0);
     // Adjust aspect ratio to fit smaller side
-    if(widget_size.y == 0){
+    if(widget_size.y <= 0.0){
         return;
     }
     float aspect_ratio = widget_size.x / widget_size.y;
@@ -62,7 +62,7 @@ void main()
 
     float distance_from_rotation = (ball_rotation_distance - pixel_distance) / ball_radius;
     float body_size_fn_squared = (1.0 - distance_from_rotation * distance_from_rotation);
-    if(body_size_fn_squared <= 0){
+    if(body_size_fn_squared <= 0.0){
         color = vec4(0.0, 0.0, 0.0, 1.0);
         return;
     }
@@ -95,7 +95,7 @@ void main()
         camera_value = 0.0;
     }
 
-    vec3 camera_color = linear_to_srgb(vec3(camera_value, 0, 0)) * 0.5;
+    vec3 camera_color = linear_to_srgb(vec3(camera_value, 0.0, 0.0)) * 0.5;
     vec3 ball_color = vec3(ball_value, ball_value, ball_value) * 0.5;
 
     // Add alpha and do gamma correction

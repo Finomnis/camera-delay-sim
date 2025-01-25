@@ -67,7 +67,7 @@ float compute_partial_triangle_area(float p0, float p1, float x){
 }
 
 float integrate_sensor_curve(float p0, float p1, float p2, float p3, float pos, float len){
-    if(0 >= len){
+    if(0.0 >= len){
         return sample_sensor_curve(p0, p1, p2, p3, pos);
     }
 

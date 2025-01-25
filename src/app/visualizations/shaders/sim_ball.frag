@@ -1,6 +1,6 @@
 float simulate_camera(vec2 pixel_pos){
-    float ball_squared = 1 - pixel_pos.y * pixel_pos.y;
-    if (ball_squared <= 0) {
+    float ball_squared = 1.0 - pixel_pos.y * pixel_pos.y;
+    if (ball_squared <= 0.0) {
         // Our y position has no ball
         return 0.0;
     }
@@ -47,7 +47,7 @@ void main()
 {
     vec2 pixel_pos = widget_size * uvs;
 
-    float ball_diameter_pixels = widget_size.y/3;
+    float ball_diameter_pixels = widget_size.y/3.0;
 
     vec2 rel_pos = (vec2(ball_diameter_pixels * 2., widget_size.y/2.) - pixel_pos) / ball_diameter_pixels;
     float rel_dist = length(rel_pos);
@@ -58,7 +58,7 @@ void main()
         ball_value = 1.0;
     }
 
-    vec3 camera_color = linear_to_srgb(vec3(camera_value, 0, 0)) * 0.5;
+    vec3 camera_color = linear_to_srgb(vec3(camera_value, 0.0, 0.0)) * 0.5;
     vec3 ball_color = vec3(ball_value, ball_value, ball_value) * 0.5;
 
     // Add alpha and do gamma correction
