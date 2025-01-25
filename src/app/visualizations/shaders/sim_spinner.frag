@@ -1,5 +1,3 @@
-uniform float spinner_simulation_speed;
-
 float simulate_camera(float pos_in_ball_radius){
     float ball_end = 1.0;
     float ball_start = -1.0;
@@ -29,7 +27,7 @@ float simulate_camera(float pos_in_ball_radius){
 
 void main()
 {
-    float time_s = time * spinner_simulation_speed;
+    float time_s = time;
 
     vec2 pixel_pos = 2.0 * uvs - vec2(1.0, 1.0);
     // Adjust aspect ratio to fit smaller side

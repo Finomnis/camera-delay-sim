@@ -5,7 +5,7 @@ use crate::app::settings::SimulatorSettings;
 pub struct SimMaterial {
     fragment_shader: &'static str,
     widget_size: Vec2,
-    time: f32,
+    time: f64,
     material_id: u16,
     settings: SimulatorSettings,
 }
@@ -36,8 +36,8 @@ impl SimMaterial {
         self.widget_size.y = height;
     }
 
-    pub fn set_time(&mut self, time: f32) {
-        self.time = time;
+    pub fn add_time(&mut self, time: f64) {
+        self.time += time;
     }
 
     pub fn apply_settings(&mut self, settings: SimulatorSettings) {
@@ -63,7 +63,7 @@ impl Material for SimMaterial {
 
     fn use_uniforms(&self, program: &Program, _camera: &Camera, _lights: &[&dyn Light]) {
         program.use_uniform_if_required("widget_size", &self.widget_size);
-        program.use_uniform_if_required("time", &self.time);
+        program.use_uniform_if_required("time", &(self.time as f32));
         program.use_uniform_if_required("ball_speed", &self.settings.ball_speed);
         program.use_uniform_if_required(
             "camera_framerate",

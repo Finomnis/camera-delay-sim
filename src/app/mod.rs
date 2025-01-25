@@ -39,21 +39,9 @@ pub fn run() {
     window.render_loop(move |mut frame_input| {
         let viewport = gui.update(&mut frame_input, &mut settings);
 
-        ball_sim_widget.update(
-            viewport,
-            frame_input.accumulated_time as f32 / 1000.0,
-            settings,
-        );
-        graph_sim_widget.update(
-            viewport,
-            frame_input.accumulated_time as f32 / 1000.0,
-            settings,
-        );
-        spinner_sim_widget.update(
-            viewport,
-            frame_input.accumulated_time as f32 / 1000.0,
-            settings,
-        );
+        ball_sim_widget.update(viewport, frame_input.elapsed_time / 1000.0, settings);
+        graph_sim_widget.update(viewport, frame_input.elapsed_time / 1000.0, settings);
+        spinner_sim_widget.update(viewport, frame_input.elapsed_time / 1000.0, settings);
 
         frame_input
             .screen()
