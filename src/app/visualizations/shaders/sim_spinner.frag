@@ -1,6 +1,6 @@
-float simulate_camera(float pos_in_ball_radius){
-    float ball_end = 1.0;
-    float ball_start = -1.0;
+float simulate_camera(float pos_in_ball_radius, float ball_visible_body_size){
+    float ball_end = ball_visible_body_size;
+    float ball_start = -ball_visible_body_size;
     float ball_size = ball_end - ball_start;
 
     float integration_distance_sensor = compute_integration_distance_sensor(
@@ -53,6 +53,10 @@ void main()
     float pixel_angle_pct = atan(pixel_pos.y, pixel_pos.x) / radians(360.0);
 
     float pixel_ball_angle_dist = mod(ball_angle_pct - pixel_angle_pct, 1.0);
+    if(pixel_ball_angle_dist >= 1.0 - ball_radius_angle_pct){
+        // Correct the fact that the ball overflows by negative one ball radius
+        pixel_ball_angle_dist -= 1.0;
+    }
 
 
 
@@ -64,19 +68,26 @@ void main()
     }
 
     float body_size_fn = sqrt(body_size_fn_squared);
-    float ball_body_angle_pct = ball_radius_angle_pct * body_size_fn;
     // Correct somewhat for the fact that the ball is not round
-    ball_body_angle_pct *= ((1.0 + ball_rotation_distance / pixel_distance) / 2.0);
+    body_size_fn *= ((1.0 + ball_rotation_distance / pixel_distance) / 2.0);
+
+    float ball_body_angle_pct = ball_radius_angle_pct * body_size_fn;
 
     float ball_value = 0.0;
 
-    if ((pixel_ball_angle_dist > 1.0 - ball_body_angle_pct)
-        || (pixel_ball_angle_dist < ball_body_angle_pct)) {
+    if ((pixel_ball_angle_dist > - ball_body_angle_pct)
+        && (pixel_ball_angle_dist < ball_body_angle_pct)) {
         ball_value = 1.0;
     }
 
-
-    float camera_value = 0.0;
+    float time_last_frame = floor(time_s * camera_framerate) / camera_framerate - camera_pipeline_delay;
+    float ball_angle_pct_last_frame = time_last_frame * ball_angle_pct_per_second;
+    float pixel_ball_angle_dist_last_frame = mod(ball_angle_pct_last_frame - pixel_angle_pct, 1.0);
+    if(pixel_ball_angle_dist_last_frame >= 1.0 - ball_radius_angle_pct){
+        // Correct the fact that the ball overflows by negative one ball radius
+        pixel_ball_angle_dist_last_frame -= 1.0;
+    }
+    float camera_value = simulate_camera(pixel_ball_angle_dist_last_frame / ball_radius_angle_pct, body_size_fn);
 
     vec3 camera_color = linear_to_srgb(vec3(camera_value, 0, 0)) * 0.5;
     vec3 ball_color = vec3(ball_value, ball_value, ball_value) * 0.5;
