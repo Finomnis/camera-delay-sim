@@ -44,9 +44,7 @@ impl SimWidget {
         self.gm.material.apply_settings(settings);
 
         // Update time
-        self.gm
-            .material
-            .add_time(delta_t * f64::from(settings.spinner_simulation_speed));
+        self.gm.material.add_time(delta_t);
     }
 
     pub fn obj(&self) -> &dyn Object {
