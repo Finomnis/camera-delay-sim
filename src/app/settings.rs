@@ -8,6 +8,7 @@ pub struct SimulatorSettings {
     pub camera_sensor_integration: u8,
     pub camera_display_strobing: u8,
     pub graph_horizontal_range_ms: u16,
+    pub spinner_simulation_speed: f32,
 }
 
 impl SimulatorSettings {
@@ -42,6 +43,16 @@ impl SimulatorSettings {
                 .logarithmic(true),
         );
 
+        ui.add_space(12.0);
+
+        ui.heading("Spinning Ball Settings");
+
+        ui.add(
+            Slider::new(&mut self.spinner_simulation_speed, 0.001..=1.0)
+                .text("Simulation speed")
+                .logarithmic(true),
+        );
+
         ui.add_space(24.0);
         if ui.button("Reset").clicked() {
             *self = Self::default();
@@ -58,6 +69,7 @@ impl Default for SimulatorSettings {
             camera_sensor_integration: 100,
             camera_display_strobing: 100,
             graph_horizontal_range_ms: 250,
+            spinner_simulation_speed: 1.0 / 50.0,
         }
     }
 }

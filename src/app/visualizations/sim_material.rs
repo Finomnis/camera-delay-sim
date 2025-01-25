@@ -27,6 +27,9 @@ impl SimMaterial {
     pub fn graph(settings: SimulatorSettings) -> Self {
         Self::new(include_str!("shaders/sim_graph.frag"), 0b101u16, settings)
     }
+    pub fn spinner(settings: SimulatorSettings) -> Self {
+        Self::new(include_str!("shaders/sim_spinner.frag"), 0b110u16, settings)
+    }
 
     pub fn set_size(&mut self, width: f32, height: f32) {
         self.widget_size.x = width;
@@ -81,6 +84,10 @@ impl Material for SimMaterial {
         program.use_uniform_if_required(
             "graph_horizontal_range_s",
             &(f32::from(self.settings.graph_horizontal_range_ms) / 1000.0),
+        );
+        program.use_uniform_if_required(
+            "spinner_simulation_speed",
+            &(self.settings.spinner_simulation_speed),
         );
     }
 
