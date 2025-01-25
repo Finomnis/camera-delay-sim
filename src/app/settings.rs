@@ -57,7 +57,7 @@ impl Default for SimulatorSettings {
             camera_pipeline_delay_ms: 35,
             camera_sensor_integration: 100,
             camera_display_strobing: 100,
-            graph_horizontal_range_ms: 150,
+            graph_horizontal_range_ms: 500,
         }
     }
 }

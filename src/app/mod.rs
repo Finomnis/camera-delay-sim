@@ -8,7 +8,7 @@ mod visualizations;
 pub fn run() {
     let window = Window::new(WindowSettings {
         title: "Camera Delay Simulator".to_string(),
-        max_size: Some((1280, 720)),
+        max_size: Some((1440, 720)),
         ..Default::default()
     })
     .unwrap();
@@ -25,9 +25,9 @@ pub fn run() {
     );
     let mut graph_sim_widget = visualizations::SimWidget::new(
         &context,
-        (0.5, 0.35),
-        (0.98, 0.69),
-        visualizations::SimMaterial::ball(settings),
+        (0.25, 0.35),
+        (0.48, 0.69),
+        visualizations::SimMaterial::graph(settings),
     );
 
     window.render_loop(move |mut frame_input| {

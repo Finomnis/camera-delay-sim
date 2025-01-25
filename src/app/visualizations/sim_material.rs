@@ -78,6 +78,10 @@ impl Material for SimMaterial {
             "camera_display_strobing",
             &(f32::from(self.settings.camera_display_strobing) / 100.0),
         );
+        program.use_uniform_if_required(
+            "graph_horizontal_range_s",
+            &(f32::from(self.settings.graph_horizontal_range_ms) / 1000.0),
+        );
     }
 
     fn render_states(&self) -> RenderStates {
