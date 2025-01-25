@@ -37,7 +37,7 @@ impl SimulatorGUI {
                     ui.label("The bottom left visualization simulates how in the same scenario, the middle row of the display would look \
                                     like, over time. The horizontal axis represents time, while the vertical axis represents the \
                                     pixels of the display (in red). The actual ball is also shown, for reference (in white).");
-                    ui.label("The bottom right visualization shows how a moving object in a stationary camera looks, in slow motion.");
+                    ui.label("The bottom right visualization shows a moving object in a stationary camera, in slow motion.");
                 });
                 panel_width = gui_context.used_rect().width();
             },

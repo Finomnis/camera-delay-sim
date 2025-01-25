@@ -48,7 +48,7 @@ impl SimulatorSettings {
         ui.heading("Spinning Ball Settings");
 
         ui.add(
-            Slider::new(&mut self.spinner_simulation_speed, 0.001..=1.0)
+            Slider::new(&mut self.spinner_simulation_speed, 0.01..=1.0)
                 .text("Simulation speed")
                 .logarithmic(true),
         );
@@ -69,7 +69,7 @@ impl Default for SimulatorSettings {
             camera_sensor_integration: 100,
             camera_display_strobing: 100,
             graph_horizontal_range_ms: 250,
-            spinner_simulation_speed: 1.0 / 50.0,
+            spinner_simulation_speed: 0.1,
         }
     }
 }

@@ -80,7 +80,9 @@ void main()
         ball_value = 1.0;
     }
 
-    float time_last_frame = floor(time_s * camera_framerate) / camera_framerate - camera_pipeline_delay;
+    float frame = time_s * camera_framerate;
+    float time_last_frame = floor(frame) / camera_framerate - camera_pipeline_delay;
+    float position_in_frame = frame - floor(frame);
     float ball_angle_pct_last_frame = time_last_frame * ball_angle_pct_per_second;
     float pixel_ball_angle_dist_last_frame = mod(ball_angle_pct_last_frame - pixel_angle_pct, 1.0);
     if(pixel_ball_angle_dist_last_frame >= 1.0 - ball_radius_angle_pct){
@@ -88,6 +90,10 @@ void main()
         pixel_ball_angle_dist_last_frame -= 1.0;
     }
     float camera_value = simulate_camera(pixel_ball_angle_dist_last_frame / ball_radius_angle_pct, body_size_fn);
+
+    if(position_in_frame > camera_display_strobing){
+        camera_value = 0.0;
+    }
 
     vec3 camera_color = linear_to_srgb(vec3(camera_value, 0, 0)) * 0.5;
     vec3 ball_color = vec3(ball_value, ball_value, ball_value) * 0.5;
