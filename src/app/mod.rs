@@ -25,14 +25,14 @@ pub fn run() {
     );
     let mut graph_sim_widget = visualizations::SimWidget::new(
         &context,
-        (0.251, 0.35),
-        (0.492, 0.69),
+        (0.25, 0.35),
+        (0.49, 0.69),
         visualizations::SimMaterial::graph(settings),
     );
     let mut spinner_sim_widget = visualizations::SimWidget::new(
         &context,
-        (0.749, 0.35),
-        (0.492, 0.69),
+        (0.75, 0.35),
+        (0.49, 0.69),
         visualizations::SimMaterial::spinner(settings),
     );
 
