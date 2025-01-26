@@ -63,7 +63,7 @@ impl SimulatorSettings {
 impl Default for SimulatorSettings {
     fn default() -> Self {
         Self {
-            ball_speed: 50.0,
+            ball_speed: 60.0,
             camera_framerate: 60,
             camera_pipeline_delay_ms: 35,
             camera_sensor_integration: 100,

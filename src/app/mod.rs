@@ -20,19 +20,19 @@ pub fn run() {
     let mut ball_sim_widget = visualizations::SimWidget::new(
         &context,
         (0.5, 0.85),
-        (0.98, 0.29),
+        (0.99, 0.29),
         visualizations::SimMaterial::ball(settings),
     );
     let mut graph_sim_widget = visualizations::SimWidget::new(
         &context,
-        (0.25, 0.35),
-        (0.48, 0.69),
+        (0.251, 0.35),
+        (0.492, 0.69),
         visualizations::SimMaterial::graph(settings),
     );
     let mut spinner_sim_widget = visualizations::SimWidget::new(
         &context,
-        (0.75, 0.35),
-        (0.48, 0.69),
+        (0.749, 0.35),
+        (0.492, 0.69),
         visualizations::SimMaterial::spinner(settings),
     );
 
