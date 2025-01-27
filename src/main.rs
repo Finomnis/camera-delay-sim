@@ -10,5 +10,5 @@ pub fn main() {
         .with_max_level(tracing::Level::DEBUG)
         .init();
 
-    app::run();
+    app::run(Some((1440, 720)));
 }

@@ -22,6 +22,6 @@ pub fn start() -> Result<(), JsValue> {
     );
     tracing_log::LogTracer::init().unwrap();
 
-    app::run();
+    app::run(None);
     Ok(())
 }

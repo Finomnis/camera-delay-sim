@@ -5,10 +5,10 @@ mod settings;
 mod visualizations;
 
 /// Runs a simulation for the given effect/engine
-pub fn run() {
+pub fn run(initial_window_size: Option<(u32, u32)>) {
     let window = Window::new(WindowSettings {
         title: "Camera Delay Simulator".to_string(),
-        //max_size: Some((1440, 720)),
+        initial_size: initial_window_size,
         ..Default::default()
     })
     .unwrap();
