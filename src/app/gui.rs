@@ -54,7 +54,7 @@ impl SimulatorGUI {
         }
     }
 
-    pub fn render(&self) {
-        self.gui.render();
+    pub fn render(&self) -> Result<(), three_d::CoreError> {
+        self.gui.render()
     }
 }

@@ -61,7 +61,8 @@ pub fn run() {
                 ],
                 &[],
             )
-            .write(|| gui.render());
+            .write(|| gui.render())
+            .unwrap();
 
         // Returns default frame output to end the frame
         FrameOutput::default()

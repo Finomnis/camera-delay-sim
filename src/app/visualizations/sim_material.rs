@@ -54,14 +54,7 @@ impl Material for SimMaterial {
         )
     }
 
-    fn fragment_attributes(&self) -> FragmentAttributes {
-        FragmentAttributes {
-            uv: true,
-            ..FragmentAttributes::NONE
-        }
-    }
-
-    fn use_uniforms(&self, program: &Program, _camera: &Camera, _lights: &[&dyn Light]) {
+    fn use_uniforms(&self, program: &Program, _camera: &dyn Viewer, _lights: &[&dyn Light]) {
         program.use_uniform_if_required("widget_size", &self.widget_size);
         program.use_uniform_if_required("time", &(self.time as f32));
         program.use_uniform_if_required("ball_speed", &self.settings.ball_speed);
@@ -105,7 +98,7 @@ impl Material for SimMaterial {
         MaterialType::Transparent
     }
 
-    fn id(&self) -> u16 {
-        self.material_id
+    fn id(&self) -> EffectMaterialId {
+        EffectMaterialId(self.material_id)
     }
 }
